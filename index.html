@@ -4,13 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mining Game</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/CSS/style.css">
 </head>
 <body>
     <div class="container">
         <h1>Mining Game</h1>
-        <p>Gold Count: <span id="goldCount">0</span></p>
         <button id="rockButton">Mine Rock!</button>
+        <p>Gold Count: <span id="goldCount">0</span></p>
+        <p>Dwarf cost: <span id="dwarfCost">100</span> Upgrade Pickaxes: <span id="pickaxeCost">50</span> Upgrade Mining Speed: <span id="upgradeSpeedCost">75</span></p>
+        <button id="purchaseDwarf">Buy a Dwarf</button>
+        <button id="pickaxePurchase">Upgrade Pickaxes</button>
+        <button id="upgradeMiningSpeed">Upgrade Mining Speed</button>
+        <p>Number of Dwarves: <span id="dwarfCounter">0</span></p>
+        <p>Each dwarf mines <span id="pickaxeCounter">1</span> gold every <span id="dwarfMiningSpeed">1000</span> milliseconds.</p>
     </div>
     
     <script src="/Javascript/script.js"></script>
