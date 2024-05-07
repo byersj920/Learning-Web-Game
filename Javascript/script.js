@@ -22,12 +22,34 @@ let speedUpgradePrice = 40;
 speedUpgradePriceCostElement.textContent= speedUpgradePrice;
 let speedUpgradeCount = 0;
 
+const updateButtonStyles = () => {
+    // Dwarf Button
+    if (goldCount >= dwarfCost) {
+        dwarfButton.classList.add('affordable');
+    } else {
+        dwarfButton.classList.remove('affordable');
+    }
 
+    // Pickaxe Purchase Button
+    if (goldCount >= pickaxeCost) {
+        pickaxePurchaseButton.classList.add('affordable');
+    } else {
+        pickaxePurchaseButton.classList.remove('affordable');
+    }
 
-const createDwarfMiningFunction = (dwarfId) => {
+    // Mining Speed Upgrade Button
+    if (goldCount >= speedUpgradePrice) {
+        miningSpeedUpgradeButton.classList.add('affordable');
+    } else {
+        miningSpeedUpgradeButton.classList.remove('affordable');
+    }
+};
+
+const createDwarfMiningFunction = () => {
     return () => {
         goldCount += pickAxeCount;
         goldCountElement.textContent = goldCount;
+        updateButtonStyles();
     };
 };
 
@@ -35,11 +57,12 @@ const startDwarfMining = (dwarfId) => {
     setInterval(dwarfMiningFunctions[dwarfId], dwarfMiningRate);
 };
 
-const dwarfMiningFunctions = {}; // Object to store dwarf mining functions
+const dwarfMiningFunctions = {};
 
 rockButton.addEventListener('click', function() {
     goldCount += 1;
     goldCountElement.textContent = goldCount;
+    updateButtonStyles();
 });
 
 dwarfButton.addEventListener('click', function(){
@@ -50,12 +73,11 @@ dwarfButton.addEventListener('click', function(){
         dwarfCountElement.textContent=dwarfCount;
         dwarfCost = Math.ceil((dwarfCost*1.5));
         dwarfCostElement.textContent = dwarfCost;
-        
-        // Create a mining function for the new dwarf
         const newDwarfId = `dwarf${dwarfCount}`;
         dwarfMiningFunctions[newDwarfId] = createDwarfMiningFunction(newDwarfId);
         startDwarfMining(newDwarfId);
     }
+    updateButtonStyles();
 });
 
 pickaxePurchaseButton.addEventListener('click', function(){
@@ -67,6 +89,7 @@ pickaxePurchaseButton.addEventListener('click', function(){
         pickaxeCost = Math.ceil(pickaxeCost*1.5);
         pickaxeCostElement.textContent = pickaxeCost;
     }
+    updateButtonStyles();
 });
 
 miningSpeedUpgradeButton.addEventListener('click', function(){
@@ -77,11 +100,10 @@ miningSpeedUpgradeButton.addEventListener('click', function(){
         currentMiningSpeed.textContent = Math.ceil(dwarfMiningRate);
         speedUpgradePrice = Math.ceil(speedUpgradePrice*1.5);
         speedUpgradePriceCostElement.textContent = speedUpgradePrice;
-        
-        // Restart mining for all dwarfs with the updated rate
         Object.keys(dwarfMiningFunctions).forEach((dwarfId) => {
             clearInterval(dwarfId);
             startDwarfMining(dwarfId);
         });
     }
+    updateButtonStyles();
 });
